@@ -1,4 +1,3 @@
-#새롭게 나타날 직업 도감 만들기
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,8 +6,6 @@ import os  # Import the os module
 st.title("진로 도감")
 
 st.subheader("미래에 인기있을 직업, 새로 나타날 직업")
-
-
 
 skill_emoji_dict = {
     "창의": "💡",
@@ -49,29 +46,20 @@ initial_jobs = [
     },
 ]
 
-
 if "직업" not in st.session_state:
     st.session_state.jobs = initial_jobs
 
-auto_complete = st.toggle("예시 데이터로 채우기")
 with st.form(key="form"):
     col1, col2 = st.columns(2)
     with col1:
-        name = st.text_input(
-            label="직업 이름",
-            value=example_job["name"] if auto_complete else ""
-        )
+        name = st.text_input(label="직업 이름")
     with col2:
         skill = st.multiselect(
             label="직업에 필요한 능력",
             options=list(skill_emoji_dict.keys()),
-            max_selections=2,
-            default=example_job["skill"] if auto_complete else []
+            max_selections=2
         )
-    image_url = st.text_input(
-        label="직업 이미지 URL",
-        value=example_job["image_url"] if auto_complete else ""
-    )
+    image_url = st.text_input(label="직업 이미지 URL")
     submit = st.form_submit_button(label="Submit")
     if submit:
         if not name:
@@ -100,5 +88,3 @@ for i in range(0, len(st.session_state.jobs), 3):
                 if delete_button:
                     del st.session_state.jobs[i+j]
                     st.rerun()
-
-   
